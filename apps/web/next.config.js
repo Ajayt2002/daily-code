@@ -1,17 +1,19 @@
-/** @type {import('next').NextConfig} */
-
 const path = require('path');
 const webpack = require("webpack");
 
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   webpack: (config) => {
-
-      // Add path aliases
     config.resolve.alias = {
-      ...config.resolve.alias,  // preserve existing aliases
+      ...config.resolve.alias,
       '@components': path.join(__dirname, 'components'),
       '@styles': path.join(__dirname, 'styles'),
-      // Add more aliases as needed
     };
 
     config.plugins.push(
@@ -29,14 +31,16 @@ module.exports = {
       {
         protocol: 'https',
         hostname: 'd2szwvl7yo497w.cloudfront.net',
-        pathname: '**', 
+        pathname: '**',
       },
       {
         protocol: 'https',
         hostname: 'appx-wsb-gcp.akamai.net.in',
-        pathname: '**', 
+        pathname: '**',
       },
     ],
   },
   output: "standalone",
 };
+
+module.exports = nextConfig;

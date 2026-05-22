@@ -9,11 +9,15 @@ RUN set -ex; \
 
 WORKDIR /usr/src/app
 
-COPY package.json yarn.lock* ./
+COPY package.json yarn.lock ./
 COPY apps/web/package.json ./apps/web/
-COPY packages/ ./packages/
+COPY packages/db/package.json ./packages/db/
+COPY packages/ui/package.json ./packages/ui/
+COPY packages/store/package.json ./packages/store/
+COPY packages/eslint-config/package.json ./packages/eslint-config/
+COPY packages/typescript-config/package.json ./packages/typescript-config/
 
-RUN yarn install --ignore-scripts
+RUN yarn install --frozen-lockfile --network-timeout 100000
 
 FROM base AS builder
 WORKDIR /usr/src/app
@@ -42,8 +46,9 @@ COPY --from=builder --chown=nextjs:nodejs /usr/src/app/apps/web/.next/static ./a
 COPY --from=builder --chown=nextjs:nodejs /usr/src/app/apps/web/public ./apps/web/public
 
 EXPOSE 3000
-ENV NODE_ENV production
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
+
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME="0.0.0.0"
 
 CMD ["node", "apps/web/server.js"]
