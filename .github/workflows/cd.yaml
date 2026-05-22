@@ -53,7 +53,7 @@ jobs:
                         ${{env.IMAGE_NAMESPACE}}/daily-code:latest
                         ${{env.IMAGE_NAMESPACE}}/daily-code:${{github.sha}}
             -   name: Run Trivy vulnerability scanner
-                uses:  aquasecurity/trivy-action@v0.27.0
+                uses:  aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
                 with:
                     image-ref: '${{env.DOCKER_REGISTRY}}/${{env.IMAGE_NAMESPACE}}/daily-code:${{github.sha}}'
                     format: 'table'
