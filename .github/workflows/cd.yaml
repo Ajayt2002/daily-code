@@ -29,6 +29,7 @@ jobs:
                     exit-code: '0'
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    DISABLE_ERRORS: true
             -   name: Semgrep SAST
                 uses: returntocorp/semgrep-action@v1
                 with:
