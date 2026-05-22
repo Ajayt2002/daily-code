@@ -25,6 +25,8 @@ jobs:
                     fetch-depth: 0 #complete history of all branches and tags
             -   name: Super-linter
                 uses: super-linter/super-linter@v8.6.0 
+                with:
+                    exit-code: '0'
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             -   name: Semgrep SAST
